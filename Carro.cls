@@ -39,4 +39,32 @@ public with sharing class Carro {
         
     }
 
+    public static void CorDoCarro(String cor){
+
+        if(cor == 'pink'){
+            cor = 'rosa';
+        }
+
+        system.debug('A cor do carro é ' + cor);
+
+    }
+
+    public static Integer velocidadeCarroMetodo(Integer marcha){
+
+        Integer velocidade = 0;
+
+        if(marcha == 1){
+            velocidade = 10;
+        }else if(marcha == 2){
+            velocidade = 20;
+        }else if(marcha == 3){
+            velocidade = 30;
+        }else if(marcha >= 4){
+            velocidade = 100;
+        }
+
+        return velocidade;
+
+    }
+
 }
