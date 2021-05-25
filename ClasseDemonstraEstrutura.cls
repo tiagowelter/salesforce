@@ -14,12 +14,77 @@ public with sharing class ClasseDemonstraEstrutura
         //Declaro variaveis pertencem ao corpo do metodo
         String textoVariavel    = 'exemplo';
         Integer inteiroVariavel = 0;
+        Decimal decimalComCasasVariavel = 50.00;
+        Boolean verdadeiroOuFalsoVariavel = true;
+        Double dobroDeCasasDecimaisVariavel = 50.665545;
+
+        //lista de inteiros declarada em branco e com inteiros adicionados após isso
+        List<Integer> listaDeValoresVariavel = new List<Integer>();
+        listaDeValoresVariavel.add(1);
+        listaDeValoresVariavel.add(2);
+        listaDeValoresVariavel.add(4);
+        listaDeValoresVariavel.add(20);
+        system.debug('listaDeValoresVariavel '+listaDeValoresVariavel);
+
+        //lista de strings declarada em branco e com strings adicionados após isso
+        List<String> listaDeStringVariavel = new List<String>();
+        listaDeStringVariavel.add('Joana');
+        listaDeStringVariavel.add('Letícia');
+        listaDeStringVariavel.add('Mariana');
+        listaDeStringVariavel.add('Brenda');
+        system.debug('listaDeStringVariavel '+listaDeStringVariavel);
+
+        //lista de strings montadas já com valores incluídos
+        List<String> listaDeString2Variavel = new List<String>{'Joana','Letícia','Mariana','Brenda','Gil'};
+        system.debug('listaDeString2Variavel '+listaDeString2Variavel);
+
+        //lista de oportunidades montada com base em um select
+        List<Opportunity> listOportunidadesVariavel = new List<Opportunity>([Select Name, Id, OwnerId, GrossTotal__c From Opportunity]);
+        system.debug('listOportunidadesVariavel '+listOportunidadesVariavel);
+
+        Decimal valorTotalVariavel = 0;
+        
+        //Para cada linha desta coleção, você vai executar a lógica que está aqui dentro
+        for(Opportunity nomeVariavelFor  : listOportunidadesVariavel){
+
+            system.debug('Nomeda oportunidade:' + nomeVariavelFor.Name + nomeVariavelFor.Id);
+
+            valorTotalVariavel += nomeVariavelFor.GrossTotal__c;
+
+        }
+        system.debug('Valor Total das oportunidades é ' + valorTotalVariavel);
+
+        for(String variavelDoFor : listaDeString2Variavel){
+
+            system.debug('Nome da Pessoa é ' + variavelDoFor);
+
+        }
+
+        /*[
+            1,
+            2,
+            4,
+            20
+        ]
+        ////////////////////////////////////////////////////////////////
+        [
+            'Joana',
+            'Letícia',
+            'Mariana',
+            'Brenda'
+        ]
+        */
+
 
         //controle de decisão
         if(parametroVariavel2 == true)
         {
             //se o parametroVariavel2 for verdadeiro eu executo o que está aqui dentro
             //corpo que fica dentro do if
+        }else if(parametroVariavel2 == null){
+        
+        }else{
+
         }
 
         //retorno tem que ser igual ao que foi declarado na construção do método
@@ -78,6 +143,70 @@ public with sharing class ClasseDemonstraEstrutura
     public static Integer exemploManipulandoCondicoesUmaLinha(Integer pValorParametro1, Integer pValorParametro2, Boolean pSempreSoma2){
 
         return pValorParametro1 + pValorParametro2 + ( (((pValorParametro1 > 5 && pValorParametro1 < 10) || pValorParametro1 == 20) && pSempreSoma2 == true) ? 2 : 0 ) ; //resultado retornado
+    }
+
+    public static Integer desafio1MultiplicaValores(Integer pValorParametro1, Integer pValorParametro2, Boolean pFazMultiplicacao)
+    {
+
+        Integer retornoVariavel = 0;
+
+        if(pFazMultiplicacao == true){
+            retornoVariavel = pValorParametro1 * pValorParametro2;
+        }
+
+        system.debug('retornoVariavel '+retornoVariavel);
+
+        return retornoVariavel;
+
+    }
+
+    public static Decimal retornaValorTotalOportunidadesMetodo()
+    {
+
+        Decimal valorOportunidadesVariavel = 0;
+
+        List<Opportunity> listaOportunidadeVariavel = new List<Opportunity>();
+
+        listaOportunidadeVariavel = [Select GrossTotal__c From Opportunity];
+
+        for(Opportunity variavelDoFor : listaOportunidadeVariavel){
+
+            valorOportunidadesVariavel += variavelDoFor.GrossTotal__c;
+
+        }
+
+        system.debug('valorOportunidadesVariavel '+valorOportunidadesVariavel);
+
+        return valorOportunidadesVariavel;
+
+    }
+
+    public static Decimal retornaValorTotalOportunidadesPorUsuariosMetodo(String idUsuario){
+
+        List<Opportunity> listaOportunidadeVariavel = new List<Opportunity>();
+
+        Decimal valorTotalVariavel = 0;
+
+        if( String.isBlank(idUsuario) ){
+
+            listaOportunidadeVariavel = [Select GrossTotal__c From Opportunity];
+
+        }else{
+
+            listaOportunidadeVariavel = [Select GrossTotal__c From Opportunity WHERE OwnerId = :idUsuario];
+
+        }
+
+        for(Opportunity variavelDoFor : listaOportunidadeVariavel){
+
+            valorTotalVariavel += variavelDoFor.GrossTotal__c;
+
+        }
+
+        system.debug('O valor total é: '+ valorTotalVariavel);
+
+        return valorTotalVariavel;
+
     }
 
 }
