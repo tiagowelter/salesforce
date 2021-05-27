@@ -1,4 +1,4 @@
-trigger AccountTrigger on Account (after insert, after update) {
+trigger AccountTrigger on Account (after insert, after update, before insert) {
 
     //Variáveis de contexto
     //Trigger.New //Lista com os novos valores
